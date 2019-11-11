@@ -14,21 +14,45 @@ describe('Jetpack toJson', function () {
         })
     });
 });
-describe('Jetpack Create',function() {
-    test('Création de Jetpack', () => {
-        const dataMock = {
-            get: jest.fn().mockReturnThis(),
-            push: jest.fn().mockReturnThis(),
-            write: jest.fn().mockReturnThis()
+describe('Jetpack Create',function()
+{
+    test('Création de Jetpack',() =>
+    {
+        const dataMock= {
+            get : jest.fn().mockReturnThis(),
+            push : jest.fn().mockReturnThis(),
+            write : jest.fn().mockReturnThis()
         };
         let jetpack = new Jetpack();
         jetpack.id = "1";
         jetpack.name = "X1982BD";
         jetpack.image = "base64...";
-        let jetPackRepository = new JetpackRepository(dataMock);
+        let jetPackRepository=new JetpackRepository(dataMock);
         jetPackRepository.create(jetpack);
         expect(dataMock.write.mock.calls.length).toBe(1);
 
+    });
+    test('Create jetPack with exception : Jetpack object is missing information (" Name IS NULL")',()=>{
+        const dataMock= {
+            get : jest.fn().mockReturnThis(),
+            push : jest.fn().mockReturnThis(),
+            write : jest.fn().mockReturnThis()
+        };
+        let jetpack = new Jetpack();
+        jetpack.id = "1";
+        jetpack.name = "";
+        jetpack.image = "base64...";
+        let jetPackRepository=new JetpackRepository(dataMock);
+        expect(jetPackRepository.create(jetpack)).toBe('Jetpack object is missing information');
+    });
+    test('Create jetPack with exception : Jetpack object is missing information ("")',()=>{
+        const dataMock= {
+            get : jest.fn().mockReturnThis(),
+            push : jest.fn().mockReturnThis(),
+            write : jest.fn().mockReturnThis()
+        };
+        let jetPackRepository=new JetpackRepository(dataMock);
+        expect(jetPackRepository.create("")).toBe('Jetpack object is undefined');
     });
 });
     describe('Jetpack : GET', function () {
