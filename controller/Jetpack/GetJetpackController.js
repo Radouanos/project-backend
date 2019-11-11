@@ -7,4 +7,6 @@ module.exports = (req, res) => {
     {
         res.status(200).send(repository.getAll());
     }
+    else
+        res.status(200).send(repository.get(id));
 };
