@@ -5,11 +5,11 @@ module.exports = class {
 
     create(jetpack) {
         if (!jetpack) {
-            throw 'Jetpack object is undefined';
+            return'Jetpack object is undefined';
         }
 
         if (!jetpack.id || !jetpack.name) {
-            throw 'Jetpack object is missing information';
+            return 'Jetpack object is missing information';
         }
 
         this.db
@@ -22,5 +22,9 @@ module.exports = class {
     }
     get(id) {
         return this.db.get('jetpacks').find({id: id}).value();
+    }
+    getSize() {
+
+        return this.db.get('jetpacks').size().value();
     }
 };
