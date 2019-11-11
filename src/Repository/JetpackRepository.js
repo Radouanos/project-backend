@@ -20,4 +20,7 @@ module.exports = class {
     getAll() {
         return this.db.get('jetpacks').value();
     }
+    get(id) {
+        return this.db.get('jetpacks').find({id: id}).value();
+    }
 };
