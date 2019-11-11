@@ -4,7 +4,9 @@ let app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
-
+app
+    .route('/bookings')
+    .post(require('./controller/Jetpack/CreateBookingController'))
 app
     .route('/jetpacks/:id?')
     .get(require('./controller/Jetpack/GetJetpackController'))
