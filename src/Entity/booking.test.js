@@ -31,17 +31,41 @@ describe('Reserver un Booking',() =>
        booking.create(reserver);
         expect(dataMock.write.mock.calls.length).toBe(1);
    });
-});
-describe('Get booking by id',()=>
-{
-    test('get jetpack in booking with ID = 1',()=>{
+    test('booking,startDate with Value NULL',()=>{
         const dbMock=
             {
                 get : jest.fn().mockReturnThis(),
-                find : jest.fn().mockReturnThis(),
-                value : jest.fn().mockReturnValue({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"})
+                push : jest.fn().mockReturnThis(),
+                write : jest.fn().mockReturnThis()
+            };
+        let reserver=new Booking();
+        reserver.jetPackId="1";
+        reserver.startDate="";
+        reserver.endDate="2019-11-08";
+        let bookingRepo= new BookingRepository(dbMock);
+        expect(bookingRepo.create(reserver)).toBe("booking object is missing information");
+    });
+    test('Value\'s booking is NULL',()=>{
+        const dbMock=
+            {
+                get : jest.fn().mockReturnThis(),
+                push : jest.fn().mockReturnThis(),
+                write : jest.fn().mockReturnThis()
             };
         let bookingRepo= new BookingRepository(dbMock);
-        expect(bookingRepo.get('1')).toEqual({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"});
+        expect(bookingRepo.create("")).toBe('booking object is undefined');
     });
+});
+describe('Get booking by id',()=>
+{
+   test('get jetpack in booking with ID = 1',()=>{
+       const dbMock=
+           {
+               get : jest.fn().mockReturnThis(),
+               find : jest.fn().mockReturnThis(),
+               value : jest.fn().mockReturnValue({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"})
+           };
+       let bookingRepo= new BookingRepository(dbMock);
+       expect(bookingRepo.get('1')).toEqual({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"});
+   });
 });
