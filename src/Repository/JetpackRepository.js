@@ -5,28 +5,32 @@ module.exports = class {
 
     create(jetpack) {
         if (!jetpack) {
-            return'Jetpack object is undefined';
+            return 'Jetpack object is undefined';
         }
-
         if (!jetpack.id || !jetpack.name) {
             return 'Jetpack object is missing information';
         }
-
         this.db
             .get('jetpacks')
             .push(jetpack.toJson())
             .write()
     }
+
+    //this is just a TEST
     getAll() {
         return this.db.get('jetpacks').value();
     }
+
+    //this is a second TEST
     get(id) {
         return this.db.get('jetpacks').find({id: id}).value();
     }
+
     getSize() {
 
         return this.db.get('jetpacks').size().value();
     }
+
     getAvailable(startDate, endDate, bookRepo) {
         if (isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
             return 'Invalid date format';
@@ -56,4 +60,4 @@ module.exports = class {
 
         }
     }
-};
+}

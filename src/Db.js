@@ -7,5 +7,6 @@ var db = low(adapter);
 // Set some defaults
 db.defaults({ jetpacks: []})
     .write();
+db.defaults({ bookings: []}).write();
 
 module.exports = db;
