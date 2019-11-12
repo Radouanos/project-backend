@@ -1,37 +1,26 @@
 {
   "info": {
-    "_postman_id": "db66848b-13cc-4d8d-add7-ce6d33d67965",
-    "name": "Ensiie Test Back",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "_postman_id": "635ba00d-33c6-457f-9a73-ae2f2ddb327b",
+    "name": "Radouane Test BackEnd",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [
     {
-      "name": "Create a Jet Pack",
+      "name": "create jetpack",
       "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "id": "29cc937c-0294-49cd-ba3e-31f7b5f41eac",
-            "exec": [
-              "pm.globals.set('url', 'http://localhost:3000')"
-            ],
-            "type": "text/javascript"
-          }
-        },
         {
           "listen": "test",
           "script": {
-            "id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
+            "id": "02da7ea4-8cf6-4e79-a5dc-97b4a2494718",
             "exec": [
-              "pm.test(\"Status code is 201\", function () {",
+              "pm.test(\"jetPack : Status code is 201\", function () {",
               "    pm.response.to.have.status(201);",
               "});",
               "",
               "pm.test(\"Json bdy has information\", function () {",
               "    var jsonData = pm.response.json();",
-              "    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
+              "    pm.expect(jsonData.name).to.eql(\"Jetpack Projet\");",
               "    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
-              "    pm.globals.set('jetpack.id', jsonData.id)",
               "});"
             ],
             "type": "text/javascript"
@@ -50,17 +39,143 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
+          "raw": "{\r\n      \"name\": \"Jetpack Projet\",\r\n      \"image\": \"Base 64 ...\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         },
+        "url": "http://localhost:3000/jetpacks"
+      },
+      "response": []
+    },
+    {
+      "name": "get jetpack",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "a9b5c5e7-8dc6-4f69-8011-b25993ac2b97",
+            "exec": [
+              "pm.test(\"Status code is 200 (GET JETPACK)\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "              });\r",
+              "              \r",
+              "pm.test(\"Json bdy has information\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(jsonData[(jsonData.length-1)].name).to.eql(\"Jet Pack à fusion X98371\");\r",
+              "    pm.expect(jsonData[(jsonData.length-1)].image).to.eql(\"Base 64 ...\");\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:3000/jetpacks"
+      },
+      "response": []
+    },
+    {
+      "name": "get jetpack available",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "bb31254f-f6f7-429b-9988-f2b9730ea5b7",
+            "exec": [
+              "pm.test(\"Status code is 200 (GET JETPACK)\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "              });\r",
+              "var jsonData = pm.response.json();           \r",
+              "var schema = jsonData[0];\r",
+              "   \r",
+              "var data1 = [true, false];\r",
+              "var data2 = [true, 123];\r",
+              "\r",
+              "pm.test('Schema is valid', function() {\r",
+              "  pm.expect(tv4.validate(data1, schema)).to.be.true;\r",
+              "  pm.expect(tv4.validate(data2, schema)).to.be.true;\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
         "url": {
-          "raw": "{{url}}/jetpacks",
+          "raw": "http://localhost:3000/jetpacks?start_date=2019-11-04&end_date=2019-11-05",
+          "protocol": "http",
           "host": [
-            "{{url}}"
+            "localhost"
           ],
+          "port": "3000",
           "path": [
             "jetpacks"
+          ],
+          "query": [
+            {
+              "key": "start_date",
+              "value": "2019-11-04"
+            },
+            {
+              "key": "end_date",
+              "value": "2019-11-05"
+            }
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name": "post booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "215d2d5c-f330-47fc-8d20-cedee9e3c0c0",
+            "exec": [
+              "pm.test(\"Booking : Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Json bdy has information\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.jetPackId).to.eql(\"1\");",
+              "    pm.expect(jsonData.startDate).to.eql(\"2019-11-11\");",
+              "    pm.expect(jsonData.endDate).to.eql(\"2019-11-12\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n      \"jetPackId\": \"1\",\r\n      \"startDate\": \"2019-11-11\",\r\n      \"endDate\": \"2019-11-12\"\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": ""
       },
       "response": []
     }
