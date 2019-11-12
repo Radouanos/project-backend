@@ -32,3 +32,16 @@ describe('Reserver un Booking',() =>
         expect(dataMock.write.mock.calls.length).toBe(1);
    });
 });
+describe('Get booking by id',()=>
+{
+    test('get jetpack in booking with ID = 1',()=>{
+        const dbMock=
+            {
+                get : jest.fn().mockReturnThis(),
+                find : jest.fn().mockReturnThis(),
+                value : jest.fn().mockReturnValue({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"})
+            };
+        let bookingRepo= new BookingRepository(dbMock);
+        expect(bookingRepo.get('1')).toEqual({ "jetPackId" : "1" , "startDate": "2019-11-02","endDate" : "2019-11-19"});
+    });
+});

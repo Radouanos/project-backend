@@ -16,4 +16,8 @@ module.exports = class {
             .push(booking.toJson())
             .write()
     }
+    get(id)
+    {
+        return this.db.get('bookings').find({jetPackId:id}).value();
+    }
 };
